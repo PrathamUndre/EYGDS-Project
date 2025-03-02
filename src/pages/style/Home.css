@@ -1,0 +1,32 @@
+/* Home.css */
+
+/* Card Hover Effect */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.03);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Form Styling */
+  .form-control {
+    border-radius: 10px;
+  }
+  
+  .btn-success {
+    width: 100%;
+    font-weight: bold;
+  }
+  
+  /* Image Preview */
+  .img-thumbnail {
+    display: block;
+    margin: auto;
+    border-radius: 10px;
+  }
+  
+
+  
+  
