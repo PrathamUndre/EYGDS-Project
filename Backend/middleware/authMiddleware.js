@@ -1,5 +1,3 @@
-
-
 const jwt = require("jsonwebtoken");
 const { jwtSecret } = require("../config/keys");
 const User = require("../models/User");
@@ -15,9 +13,15 @@ const authMiddleware = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, jwtSecret);
-    
+
     // Attach user ID to request (reduce unnecessary DB queries)
-    req.user = { id: decoded.id };
+    // req.user = { id: decoded.id };
+
+    // Optional: Verify user exists (uncomment if needed)
+    const user = await User.findById(decoded.id).select("-password");
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized: User not found" });
+    }
 
     next();
   } catch (error) {
