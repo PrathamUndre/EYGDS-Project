@@ -15,7 +15,7 @@ const Register = () => {
     setLoading(true); // Disable form while submitting
 
     try {
-      const res = await fetch("https://eygds-project.onrender.com/auth/register", {
+      const res = await fetch("https://eygds-project.onrender.com/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
