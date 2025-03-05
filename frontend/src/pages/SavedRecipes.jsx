@@ -9,7 +9,7 @@ const SavedRecipes = () => {
   useEffect(() => {
     const fetchSavedRecipes = async () => {
       try {
-        const response = await fetch("https://eygds-project.onrender.com/api/recipes");
+        const response = await fetch("https://eygds-project.onrender.com/recipes");
         const data = await response.json();
         const filteredRecipes = data.filter((recipe) => savedRecipeIds.includes(recipe._id));
         setRecipes(filteredRecipes);
