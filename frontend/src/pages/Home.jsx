@@ -25,7 +25,7 @@ const Home = () => {
   });
 
   useEffect(() => {
-    fetch("https://eygds-project.onrender.com/api/recipes")
+    fetch("https://eygds-project.onrender.com/recipes")
       .then((res) => res.json())
       .then((data) => setRecipes(data))
       .catch((error) => console.error("Error fetching recipes:", error));
@@ -60,14 +60,14 @@ const Home = () => {
       let response;
       if (editRecipeId) {
         response = await fetch(
-          `https://eygds-project.onrender.com/api/recipes/${editRecipeId}`,
+          `https://eygds-project.onrender.com/recipes/${editRecipeId}`,
           {
             method: "PUT",
             body: formData,
           }
         );
       } else {
-        response = await fetch("https://eygds-project.onrender.com/api/recipes", {
+        response = await fetch("https://eygds-project.onrender.com/recipes", {
           method: "POST",
           body: formData,
         });
@@ -104,7 +104,7 @@ const Home = () => {
     if (!window.confirm("Are you sure you want to delete this recipe?")) return;
 
     try {
-      await fetch(`https://eygds-project.onrender.com/api/recipes/${id}`, {
+      await fetch(`https://eygds-project.onrender.com/recipes/${id}`, {
         method: "DELETE",
       });
       setRecipes((prev) => prev.filter((recipe) => recipe._id !== id));
