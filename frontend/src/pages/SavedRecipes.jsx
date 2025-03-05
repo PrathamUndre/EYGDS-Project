@@ -32,7 +32,7 @@ const SavedRecipes = () => {
             <div key={recipe._id} className="col d-flex">
               <div className="card flex-fill shadow-lg border-0 rounded-4 overflow-hidden position-relative">
                 <img
-                  src={`http://localhost:5002${recipe.image}`}
+                  src={`https://eygds-project.onrender.com${recipe.image}`}
                   alt={recipe.name}
                   className="card-img-top"
                   style={{ height: "200px", objectFit: "cover" }}
