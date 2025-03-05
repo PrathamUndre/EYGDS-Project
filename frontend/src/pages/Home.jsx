@@ -25,7 +25,7 @@ const Home = () => {
   });
 
   useEffect(() => {
-    fetch("http://localhost:5002/api/recipes")
+    fetch("https://eygds-project.onrender.com/api/recipes")
       .then((res) => res.json())
       .then((data) => setRecipes(data))
       .catch((error) => console.error("Error fetching recipes:", error));
@@ -60,14 +60,14 @@ const Home = () => {
       let response;
       if (editRecipeId) {
         response = await fetch(
-          `http://localhost:5002/api/recipes/${editRecipeId}`,
+          `https://eygds-project.onrender.com/api/recipes/${editRecipeId}`,
           {
             method: "PUT",
             body: formData,
           }
         );
       } else {
-        response = await fetch("http://localhost:5002/api/recipes", {
+        response = await fetch("https://eygds-project.onrender.com/api/recipes", {
           method: "POST",
           body: formData,
         });
@@ -104,7 +104,7 @@ const Home = () => {
     if (!window.confirm("Are you sure you want to delete this recipe?")) return;
 
     try {
-      await fetch(`http://localhost:5002/api/recipes/${id}`, {
+      await fetch(`https://eygds-project.onrender.com/api/recipes/${id}`, {
         method: "DELETE",
       });
       setRecipes((prev) => prev.filter((recipe) => recipe._id !== id));
@@ -279,7 +279,7 @@ const Home = () => {
                 )}
               </button>
               <img
-                src={`http://localhost:5002${recipe.image}`}
+                src={`https://eygds-project.onrender.com${recipe.image}`}
                 alt={recipe.name}
                 className="card-img-top img-fluid"
               />
