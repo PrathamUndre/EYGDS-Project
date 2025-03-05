@@ -15,11 +15,7 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors({
-  origin:[ "https://eygds-project.onrender.com","http://localhost:3000"] ,// ✅ Update with your frontend URL
-  credentials: true,
-}));
-
+app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
