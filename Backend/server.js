@@ -16,7 +16,7 @@ connectDB();
 
 // Middleware
 app.use(cors({
-  origin: "https://eygds-project.onrender.com", // ✅ Update with your frontend URL
+  origin:[ "https://eygds-project.onrender.com","http://localhost:3000"] ,// ✅ Update with your frontend URL
   credentials: true,
 }));
 
@@ -37,5 +37,5 @@ app.use("/api/auth", authRoutes);
 app.use("/api/recipes", recipeRoutes); // Use recipe routes
 
 // Start Server
-const PORT = process.env.PORT || 5002;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
