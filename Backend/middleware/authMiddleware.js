@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
-const {jwtSecret} = ("../config/keys");
 const User = require("../models/User");
+const { jwtSecret } = require("../config/keys"); // ✅ Correct import
 
 const authMiddleware = async (req, res, next) => {
   const authHeader = req.header("Authorization");
@@ -14,10 +14,10 @@ const authMiddleware = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, jwtSecret);
 
-    // Attach user ID to request (reduce unnecessary DB queries)
-    // req.user = { id: decoded.id };
+    // Attach user ID to request (avoid unnecessary DB queries)
+    req.user = { id: decoded.id };
 
-    // Optional: Verify user exists (uncomment if needed)
+    // Optional: Verify user exists in DB (Uncomment if needed)
     const user = await User.findById(decoded.id).select("-password");
     if (!user) {
       return res.status(401).json({ message: "Unauthorized: User not found" });
