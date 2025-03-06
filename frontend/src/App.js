@@ -31,7 +31,7 @@ const App = () => {
       <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/about" element={<About/>} />
+        <Route path="/About" element={<About/>} />
        
         {/* Protected Routes */}
         <Route path="/home" element={isAuthenticated ? <Home/> : <Navigate to="/login" />} />
