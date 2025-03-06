@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-const { jwtSecret } = require("../config/keys"); // ✅ Correct import
+const jwtSecret = process.env.JWT_SECRET; // ✅ Correct import
 const authMiddleware = require("../middleware/authMiddleware"); // ✅ Import auth middleware
 
 // Register User
