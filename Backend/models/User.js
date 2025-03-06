@@ -23,6 +23,7 @@ const UserSchema = new mongoose.Schema(
       required: [true, "Password is required"], 
       minlength: [6, "Password must be at least 6 characters long"], 
     },
+     savedRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Recipe" }],
   },
   { timestamps: true } // Adds createdAt and updatedAt fields automatically
 );
