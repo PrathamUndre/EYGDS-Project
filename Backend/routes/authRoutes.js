@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const {jwtSecret} = ("../config/keys");
-
+const User = require("../models/User");
+const { jwtSecret } = require("../config/keys"); // ✅ Correct import
+const authMiddleware = require("../middleware/authMiddleware"); // ✅ Import auth middleware
 
 // Register User
 router.post("/register", async (req, res) => {
@@ -16,9 +16,11 @@ router.post("/register", async (req, res) => {
 
     // Check if user already exists
     let user = await User.findOne({ email });
-    if (user) return res.status(400).json({ message: "User already exists" });
+    if (user) {
+      return res.status(400).json({ message: "User already exists" });
+    }
 
-    // Create new user (password will be hashed automatically by Mongoose middleware)
+    // Create new user (password is hashed automatically in User model)
     user = new User({ name, email, password });
     await user.save();
 
@@ -27,29 +29,48 @@ router.post("/register", async (req, res) => {
 
     res.status(201).json({ token, userId: user._id, message: "Registration successful!" });
   } catch (error) {
-    console.error("Registration Error:", error);
+    console.error("❌ Registration Error:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
 
 // Login User
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
   try {
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "User not found" });
+    const { email, password } = req.body;
 
-    // Compare provided password with stored hashed password
+    // Find user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
 
     // Generate JWT token
     const token = jwt.sign({ id: user._id }, jwtSecret, { expiresIn: "1h" });
 
     res.json({ token, userId: user._id });
   } catch (error) {
-    console.error("Login Error:", error);
+    console.error("❌ Login Error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Get authenticated user's data (protected route)
+router.get("/me", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error("❌ Fetch User Error:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
