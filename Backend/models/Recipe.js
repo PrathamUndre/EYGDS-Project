@@ -2,7 +2,12 @@ const mongoose = require("mongoose");
 
 const RecipeSchema = new mongoose.Schema(
   {
-    name: { type: String, required: [true, "Recipe name is required"] },
+    name: { 
+      type: String, 
+      required: [true, "Recipe name is required"], 
+      trim: true 
+    },
+
     image: {
       type: String,
       validate: {
@@ -12,20 +17,27 @@ const RecipeSchema = new mongoose.Schema(
         message: "Invalid image URL format",
       },
     },
+
     ingredients: {
-      type: [{ type: String, required: true }],
+      type: [String], // Simplified array definition
+      required: true,
       validate: {
         validator: (arr) => arr.length > 0,
         message: "At least one ingredient is required",
       },
-      default: [],
     },
-    method: { type: String, required: [true, "Recipe method is required"] },
+
+    method: { 
+      type: String, 
+      required: [true, "Recipe method is required"], 
+      trim: true 
+    },
+
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true, // Ensures every recipe is linked to a user
-      index: true, // Indexing for performance
+      required: true,
+      index: true, // Indexed for better query performance
     },
   },
   { timestamps: true }
